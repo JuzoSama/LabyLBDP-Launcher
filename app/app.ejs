@@ -1,0 +1,50 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-In6B8teKZQll5heMl9bS7CESTbGvuAt3VVV86BUQBDk='"/>
+    <title><%= lang('app.title') %></title>
+    <script src="./assets/js/scripts/uicore.js"></script>
+    <script src="./assets/js/scripts/uibinder.js"></script>
+    <link type="text/css" rel="stylesheet" href="./assets/css/launcher.css">
+    <link type="text/css" rel="stylesheet" href="./assets/css/theme.css">
+    <style>
+        body {
+            /*background: url('assets/images/backgrounds/<%=bkid%>.jpg') no-repeat center center fixed;*/
+            transition: background-image 1s ease;
+            background-image: url('data:image/jpeg;base64,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');
+            background-size: cover;
+            -webkit-user-select: none;
+        }
+        #main {
+            display: none;
+            height: calc(100% - 22px);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
+            width: 100%;
+            position: absolute;
+            z-index: 10;
+        }
+        #main[overlay] {
+            filter: blur(3px) contrast(0.9) brightness(1.0);
+        }
+    </style>
+</head>
+<body bkid="<%=bkid%>">
+    <%- include('frame') %>
+    <div id="main">
+        <%- include('welcome') %>
+        <%- include('login') %>
+        <%- include('waiting') %>
+        <%- include('loginOptions') %>
+        <%- include('settings') %>
+        <%- include('landing') %>
+    </div>
+    <%- include('overlay') %>
+    <div id="loadingContainer">
+        <div id="loadingContent">
+            <div id="loadSpinnerContainer">
+                <img id="loadCenterImage" src="assets/images/LoadingSeal.png">
+                <img id="loadSpinnerImage" class="rotating" src="assets/images/LoadingText.png">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

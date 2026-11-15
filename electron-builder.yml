@@ -1,0 +1,51 @@
+appId: 'fr.labylbdp.launcher'
+productName: 'Laby LBDP'
+artifactName: '${productName}-setup-${version}.${ext}'
+
+copyright: 'Copyright © 2026 Laby LBDP — basé sur Helios Launcher © 2018-2026 Daniel Scalzi'
+
+asar: true
+compression: 'maximum'
+
+files:
+  - '!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.nvmrc,eslint.config.mjs}'
+
+extraResources:
+  - 'libraries'
+
+# Windows Configuration
+win: 
+  target: 
+    - target: 'nsis'
+      arch: 'x64'
+
+# Windows Installer Configuration
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+
+# macOS Configuration
+mac:
+  target:
+    - target: 'dmg'
+      arch:
+        - 'x64'
+        - 'arm64'
+  artifactName: '${productName}-setup-${version}-${arch}.${ext}'
+  category: 'public.app-category.games'
+
+# Linux Configuration
+linux: 
+  target: 'AppImage'
+  maintainer: 'Laby LBDP'
+  vendor: 'Laby LBDP'
+  synopsis: 'Launcher Minecraft moddé'
+  description: 'Launcher du serveur Laby LBDP. Les mods, les configurations et les mises à jour sont gérés automatiquement.'
+  category: 'Game'
+
+
+directories:
+  buildResources: 'build'
+  output: 'dist'

@@ -1,0 +1,113 @@
+/*******************************************************************************
+ * Thème Laby LBDP
+ * Ce fichier est chargé après launcher.css et le surcharge.
+ * Pour changer de couleur, modifie simplement --accent ci-dessous.
+ ******************************************************************************/
+
+:root {
+    --accent: #e8a33d;          /* couleur principale (ambre « torche ») */
+    --accent-clair: #ffd08a;
+    --accent-ombre: rgba(232, 163, 61, 0.55);
+    --panneau: rgba(12, 10, 9, 0.72);
+    --police-titres: 'Cinzel', 'Avenir Medium', serif;
+}
+
+@font-face {
+    font-family: 'Cinzel';
+    font-weight: 500;
+    src: url('../fonts/cinzel-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Cinzel';
+    font-weight: 700;
+    src: url('../fonts/cinzel-latin-700-normal.woff2') format('woff2');
+}
+
+/* ---------- Titres ---------- */
+#frameTitleText,
+#welcomeHeader,
+#loginSubheader,
+#loginOptionsTitle,
+#settingsNavHeaderText,
+.settingsTabHeaderText,
+#overlayTitle,
+#launch_button,
+#welcomeButton,
+#serverSelectHeader,
+#accountSelectHeader {
+    font-family: var(--police-titres);
+    font-weight: 700;
+}
+#frameTitleText { letter-spacing: 2px; color: var(--accent); }
+#welcomeHeader { color: var(--accent-clair); letter-spacing: 3px; }
+.settingsTabHeaderText { color: var(--accent-clair); }
+
+/* ---------- Logo ---------- */
+#image_seal { border: none; filter: drop-shadow(0 0 10px var(--accent-ombre)); }
+#welcomeImageSeal, #loginImageSeal, #settingsAboutLogo { filter: drop-shadow(0 0 14px var(--accent-ombre)); }
+#avatarContainer { border-color: var(--accent); }
+
+/* ---------- Bouton JOUER ---------- */
+#launch_button {
+    color: var(--accent);
+    font-size: 24px;
+    letter-spacing: 4px;
+    text-shadow: 0 0 12px var(--accent-ombre);
+}
+#launch_button:hover,
+#launch_button:focus {
+    color: var(--accent-clair);
+    text-shadow: 0 0 22px var(--accent), 0 0 22px var(--accent);
+}
+#launch_button:active { color: #fff; text-shadow: 0 0 22px var(--accent); }
+#launch_button:disabled { color: #8a7a62; text-shadow: none; }
+#launch_progress_label { color: var(--accent); }
+#launch_progress[value]::-webkit-progress-value { background: var(--accent); }
+
+/* ---------- Bas de l'écran d'accueil ---------- */
+#server_status_wrapper { width: auto; min-width: 75px; }
+#player_count { white-space: nowrap; }
+#newsButton:hover #newsButtonText,
+#newsButton:focus #newsButtonText,
+#server_selection_button:hover,
+#server_selection_button:focus { text-shadow: 0 0 20px var(--accent), 0 0 20px var(--accent); }
+.mediaSVG:hover, #settingsMediaButton:hover .mediaSVG { fill: var(--accent); }
+
+/* ---------- Paramètres ---------- */
+#settingsContainer { background: var(--panneau); }
+.settingsNavItem { position: relative; }
+.settingsNavItem[selected] { color: var(--accent); }
+.settingsNavItem[selected]::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 15%;
+    height: 70%;
+    width: 2px;
+    background: var(--accent);
+}
+.settingsNavItem:hover, .settingsNavItem:focus { text-shadow: 0 0 20px var(--accent), 0 0 20px var(--accent); }
+input:checked + .toggleSwitchSlider { background-color: var(--accent); border: 1px solid var(--accent); }
+.rangeSliderBar { background: var(--accent); }
+.settingsAuthAccountSelect[selected] { color: var(--accent); border-color: var(--accent); }
+#settingsAboutCurrentVersionCheck, #settingsUpdateVersionCheck { background: var(--accent); }
+#settingsAboutCurrentVersionTitle, #settingsUpdateVersionTitle { color: var(--accent); }
+.settingsTab a, #settingsAboutChangelogText a { color: var(--accent-clair); }
+
+/* ---------- Boutons des fenêtres (overlay, connexion) ---------- */
+#overlayAcknowledge:hover, #overlayAcknowledge:focus,
+.loginOptionButton:hover, .loginOptionButton:focus,
+#serverSelectConfirm:hover, #accountSelectConfirm:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-ombre);
+}
+#loginButton:hover, #loginButton:focus,
+#welcomeButton:hover, #welcomeButton:focus { text-shadow: 0 0 20px var(--accent), 0 0 20px var(--accent); }
+.serverListing[selected], .accountListing[selected] { border-color: var(--accent); box-shadow: 0 0 12px var(--accent-ombre); }
+
+/* ---------- Barres de défilement ---------- */
+::-webkit-scrollbar-thumb { background: var(--accent-ombre) !important; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent) !important; }
+
+/* ---------- Voile sombre pour garder le texte lisible sur le fond ---------- */
+body #main { background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.25) 45%, rgba(0, 0, 0, 0.45) 100%); }
