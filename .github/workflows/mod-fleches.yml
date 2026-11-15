@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     defaults:
       run:
         working-directory: serveur-mods/fleches-persistantes
@@ -28,3 +30,19 @@ jobs:
         with:
           name: laby_fleches
           path: serveur-mods/fleches-persistantes/build/libs/*.jar
+
+      # Copie du .jar compilé dans la branche « compilations » (facile à récupérer)
+      - name: Publier le jar dans la branche compilations
+        working-directory: .
+        run: |
+          mkdir -p /tmp/out && cp serveur-mods/fleches-persistantes/build/libs/*.jar /tmp/out/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin compilations || true
+          if git rev-parse --verify -q origin/compilations; then git switch -c compilations origin/compilations; else git switch --orphan compilations; fi
+          git rm -rq --cached . 2>/dev/null || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp /tmp/out/*.jar .
+          git add *.jar
+          git commit -m "Compilation de ${GITHUB_SHA::7}" || exit 0
+          git push origin compilations
