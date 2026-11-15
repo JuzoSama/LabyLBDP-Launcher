@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="laby_fleches"
+version="1.0.0"
+displayName="Laby LBDP - Flèches persistantes"
+authors="Laby LBDP"
+description='''Les flèches et dards d'abeille plantés dans un joueur restent en place quand il se déconnecte puis se reconnecte.'''
+
+[[dependencies.laby_fleches]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.laby_fleches]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"

@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
+}
+
+group = 'fr.labylbdp'
+version = '1.0.0'
+base { archivesName = 'laby_fleches' }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.4.10'
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes(['Specification-Title': 'laby_fleches', 'Implementation-Version': project.version])
+    }
+    finalizedBy 'reobfJar'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
