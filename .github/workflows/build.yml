@@ -1,7 +1,8 @@
 name: Build
 
-# Le launcher est compilé quand tu pousses un tag de version (ex : v1.0.1),
-# ou à la main depuis l'onglet « Actions » de GitHub.
+# Compile les installateurs et publie la version indiquée dans package.json
+# (ex. "version": "1.0.1" → release v1.0.1).
+# Se lance à la main (onglet Actions → Build → Run workflow) ou sur un tag v*.
 on:
   push:
     tags:
@@ -9,7 +10,34 @@ on:
   workflow_dispatch:
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - id: v
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Créer la release brouillon
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v${{ steps.v.outputs.version }}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            if [ "$(gh release view "$TAG" --json isDraft -q .isDraft)" = "false" ]; then
+              echo "::error::La version $TAG est déjà publiée. Augmente \"version\" dans package.json."
+              exit 1
+            fi
+          else
+            gh release create "$TAG" --draft --target "$GITHUB_SHA" --title "Laby LBDP $TAG" --notes "Laby LBDP $TAG"
+          fi
+
   release:
+    needs: prepare
     runs-on: ${{ matrix.os }}
 
     permissions:
@@ -40,5 +68,16 @@ jobs:
       - name: Build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run dist
+        run: npm run dist -- --publish always
         shell: bash
+
+  publier:
+    needs: [prepare, release]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Publier la release (les launchers des joueurs la verront)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release edit "v${{ needs.prepare.outputs.version }}" --draft=false --latest --repo "$GITHUB_REPOSITORY"
