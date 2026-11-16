@@ -95,6 +95,54 @@ function filtrerPourLeCompte(distro, staff) {
     return copie
 }
 
+/* ------------------------------------------------------------------
+ * Mods placés directement dans le dossier mods de l'instance
+ * (Sinytra Connector, Fabric API, mods Fabric...). Le téléchargeur ne
+ * supprime jamais ces fichiers : on retire ici ceux que le launcher avait
+ * placés et qui ne sont plus dans la liste (mod retiré, staff retiré).
+ * ------------------------------------------------------------------ */
+
+function fichiersModsGeres(serveur) {
+    const chemins = new Set()
+    const parcourir = modules => {
+        for(const m of modules || []) {
+            const p = m.artifact && m.artifact.path
+            if(m.type === 'File' && p && /^mods[\\/][^\\/]+\.jar$/i.test(p)) {
+                chemins.add(p.replace(/\\/g, '/'))
+            }
+            parcourir(m.subModules)
+        }
+    }
+    parcourir(serveur.modules)
+    return chemins
+}
+
+async function nettoyerModsDossier(distro) {
+    for(const serveur of distro.servers || []) {
+        try {
+            const dossier = path.join(ConfigManager.getInstanceDirectory(), serveur.id)
+            const registre = path.join(dossier, '.laby-mods.json')
+            const actuels = fichiersModsGeres(serveur)
+            let anciens = []
+            try {
+                anciens = await fs.readJson(registre)
+            } catch {
+                anciens = []
+            }
+            for(const p of anciens) {
+                if(!actuels.has(p) && /^mods\/[^/]+\.jar$/i.test(p)) {
+                    await fs.remove(path.join(dossier, p))
+                    logger.info(`Mod retiré du dossier mods : ${p}`)
+                }
+            }
+            await fs.ensureDir(dossier)
+            await fs.writeJson(registre, [...actuels])
+        } catch(err) {
+            logger.warn('Nettoyage du dossier mods impossible.', err)
+        }
+    }
+}
+
 api._loadDistributionNullable = async function() {
     if(this.devMode) {
         return await this.pullLocal()
@@ -112,6 +160,7 @@ api._loadDistributionNullable = async function() {
     }
     const filtree = filtrerPourLeCompte(complete, await chargerStaff())
     await this.writeDistributionToDisk(filtree)
+    await nettoyerModsDossier(filtree)
     return filtree
 }
 
