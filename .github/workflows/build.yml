@@ -43,7 +43,12 @@ jobs:
     permissions:
       contents: write
 
+    # macOS est facultatif : GitHub manque parfois de machines Mac.
+    continue-on-error: ${{ matrix.os == 'macos-latest' }}
+    timeout-minutes: 60
+
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
@@ -73,10 +78,18 @@ jobs:
 
   publier:
     needs: [prepare, release]
+    if: ${{ !cancelled() && needs.prepare.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
+      - name: Vérifier que l'installateur Windows est bien là
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v${{ needs.prepare.outputs.version }}"
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets -q '.assets[].name' | tee /tmp/assets
+          grep -q "Laby-LBDP-setup-${{ needs.prepare.outputs.version }}.exe" /tmp/assets || { echo "::error::Installateur Windows manquant, release non publiée."; exit 1; }
       - name: Publier la release (les launchers des joueurs la verront)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -91,7 +104,7 @@ jobs:
 
   lien-direct:
     needs: [prepare, publier]
-    if: ${{ !contains(needs.prepare.outputs.version, '-') }}
+    if: ${{ !cancelled() && needs.publier.result == 'success' && !contains(needs.prepare.outputs.version, '-') }}
     uses: ./.github/workflows/lien-direct.yml
     permissions:
       contents: write
