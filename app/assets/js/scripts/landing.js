@@ -963,6 +963,12 @@ async function loadNews(){
         loggerLanding.debug('No RSS feed provided.')
         return null
     }
+    try {
+        new URL(distroData.rawDistribution.rss)
+    } catch {
+        loggerLanding.warn('Invalid RSS feed URL, news disabled.')
+        return null
+    }
 
     const promise = new Promise((resolve, reject) => {
         
