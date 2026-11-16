@@ -1,0 +1,27 @@
+name: Lien de téléchargement direct
+
+# Ajoute à la dernière version stable une copie de l'installateur Windows
+# au nom fixe « Laby-LBDP-Setup.exe », pour que ce lien marche toujours :
+# https://github.com/JuzoSama/LabyLBDP-Launcher/releases/latest/download/Laby-LBDP-Setup.exe
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  lien:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Copier l'installateur sous un nom fixe
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          TAG=$(gh release view --json tagName -q .tagName)
+          V="${TAG#v}"
+          mkdir -p /tmp/lien
+          gh release download "$TAG" -p "Laby-LBDP-setup-$V.exe" -D /tmp/lien
+          mv "/tmp/lien/Laby-LBDP-setup-$V.exe" /tmp/lien/Laby-LBDP-Setup.exe
+          gh release upload "$TAG" /tmp/lien/Laby-LBDP-Setup.exe --clobber
+          echo "Lien direct : https://github.com/$GH_REPO/releases/latest/download/Laby-LBDP-Setup.exe"
