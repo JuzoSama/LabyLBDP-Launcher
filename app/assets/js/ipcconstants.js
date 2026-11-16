@@ -1,7 +1,9 @@
 // À REMPLACER : cet identifiant est celui du Helios Launcher d'origine.
 // Crée ta propre application Microsoft (gratuit) et colle son identifiant ici.
 // Voir GUIDE.md (étape 4) et docs/MicrosoftAuth.md.
-exports.AZURE_CLIENT_ID = 'd77c6290-74a6-4bec-9024-eb0df77f91a8'
+// Application Microsoft « Laby LBDP » (en attente de validation par Microsoft) :
+// exports.AZURE_CLIENT_ID = 'd77c6290-74a6-4bec-9024-eb0df77f91a8'
+exports.AZURE_CLIENT_ID = '1ce6e35a-126f-48fd-97fb-54d143ac6d45'
 // SEE NOTE ABOVE.
 
 
