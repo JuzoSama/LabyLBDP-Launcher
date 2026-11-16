@@ -80,4 +80,11 @@ jobs:
       - name: Publier la release (les launchers des joueurs la verront)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release edit "v${{ needs.prepare.outputs.version }}" --draft=false --latest --repo "$GITHUB_REPOSITORY"
+        run: |
+          TAG="v${{ needs.prepare.outputs.version }}"
+          if [[ "$TAG" == *-* ]]; then
+            # ex. v1.0.1-test.1 : pré-version, ignorée par les launchers des joueurs
+            gh release edit "$TAG" --draft=false --prerelease --latest=false --repo "$GITHUB_REPOSITORY"
+          else
+            gh release edit "$TAG" --draft=false --latest --repo "$GITHUB_REPOSITORY"
+          fi
