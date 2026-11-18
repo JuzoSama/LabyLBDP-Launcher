@@ -554,6 +554,16 @@ function defaultJavaConfig17(ram) {
 exports.ensureJavaConfig = function(serverid, effectiveJavaOptions, ram) {
     if(!Object.prototype.hasOwnProperty.call(config.javaConfig, serverid)) {
         config.javaConfig[serverid] = defaultJavaConfig(effectiveJavaOptions, ram)
+    } else if(ram?.minimum != null) {
+        // Laby LBDP : si la mémoire réglée est sous le minimum demandé par le
+        // modpack, on remonte à la valeur recommandée (sans dépasser la limite du PC).
+        const jc = config.javaConfig[serverid]
+        const enMo = v => { const m = /^(\d+)([MG])$/i.exec(v || ''); return m ? Number(m[1]) * (m[2].toUpperCase() === 'G' ? 1024 : 1) : 0 }
+        if(enMo(jc.maxRAM) < ram.minimum) {
+            const cible = Math.min(ram.recommended ?? ram.minimum, exports.getAbsoluteMaxRAM() * 1024)
+            jc.maxRAM = `${cible}M`
+            if(enMo(jc.minRAM) > cible || enMo(jc.minRAM) < ram.minimum) jc.minRAM = `${cible}M`
+        }
     }
 }
 
