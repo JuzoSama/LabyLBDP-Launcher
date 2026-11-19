@@ -1,9 +1,9 @@
 {
   "name": "labylbdp-launcher",
-  "version": "1.0.4",
-  "productName": "Laby LBDP",
-  "description": "Launcher Minecraft moddé — Laby LBDP",
-  "author": "Laby LBDP (basé sur Helios Launcher de Daniel Scalzi)",
+  "version": "1.0.5",
+  "productName": "Projet PARADOX",
+  "description": "Launcher Minecraft moddé — Projet P.A.R.A.D.O.X.",
+  "author": "Projet P.A.R.A.D.O.X. (basé sur Helios Launcher de Daniel Scalzi)",
   "license": "UNLICENSED",
   "homepage": "https://github.com/JuzoSama/LabyLBDP-Launcher",
   "bugs": {

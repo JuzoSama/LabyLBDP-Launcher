@@ -2,7 +2,7 @@
 # Tout ce qui est ici remplace les valeurs de fr_FR.toml / en_US.toml.
 
 [ejs.app]
-title = "Laby LBDP"
+title = "Projet P.A.R.A.D.O.X."
 
 [ejs.landing]
 # Liens des icônes en bas à gauche de l'écran d'accueil. Mets "#" pour un lien inactif.
@@ -18,7 +18,7 @@ supportLink = "https://github.com/JuzoSama/LabyLBDP-Launcher/issues"
 
 [ejs.welcome]
 # Texte provisoire de l'écran de bienvenue (premier lancement) : à réécrire à ton goût.
-welcomeHeader = "BIENVENUE SUR LABY LBDP"
+welcomeHeader = "BIENVENUE DANS LE PROJET P.A.R.A.D.O.X."
 welcomeDescription = "Ce launcher installe et met à jour tout seul Minecraft, Forge et les mods du serveur. Connecte-toi avec ton compte Microsoft, clique sur Jouer, et tu es dans le labyrinthe."
 welcomeDescCTA = "Plus que quelques clics avant d'entrer."
 

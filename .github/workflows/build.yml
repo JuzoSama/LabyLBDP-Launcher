@@ -33,7 +33,7 @@ jobs:
               exit 1
             fi
           else
-            gh release create "$TAG" --draft --target "$GITHUB_SHA" --title "Laby LBDP $TAG" --notes "Laby LBDP $TAG"
+            gh release create "$TAG" --draft --target "$GITHUB_SHA" --title "Projet P.A.R.A.D.O.X. $TAG" --notes "Projet P.A.R.A.D.O.X. $TAG"
           fi
 
   release:
@@ -89,7 +89,7 @@ jobs:
         run: |
           TAG="v${{ needs.prepare.outputs.version }}"
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets -q '.assets[].name' | tee /tmp/assets
-          grep -q "Laby-LBDP-setup-${{ needs.prepare.outputs.version }}.exe" /tmp/assets || { echo "::error::Installateur Windows manquant, release non publiée."; exit 1; }
+          grep -q "Projet-PARADOX-setup-${{ needs.prepare.outputs.version }}.exe" /tmp/assets || { echo "::error::Installateur Windows manquant, release non publiée."; exit 1; }
       - name: Publier la release (les launchers des joueurs la verront)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

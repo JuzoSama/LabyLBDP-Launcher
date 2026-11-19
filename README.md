@@ -1,6 +1,6 @@
-# Laby LBDP — Launcher
+# Projet P.A.R.A.D.O.X. — Launcher
 
-Launcher Minecraft moddé (Forge 1.20.1) pour le serveur **Laby LBDP**.
+Launcher Minecraft moddé (Forge 1.20.1) pour le serveur **Projet P.A.R.A.D.O.X.**.
 Il installe Java, Minecraft, Forge et les mods du serveur, et se met à jour tout seul.
 
 - **Pour le configurer et le publier : lis [GUIDE.md](GUIDE.md).**

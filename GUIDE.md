@@ -1,4 +1,4 @@
-# Guide — mettre en ligne ton launcher Laby LBDP
+# Guide — mettre en ligne ton launcher Projet P.A.R.A.D.O.X.
 
 Ce qui est déjà fait dans ce dossier : le nom, le logo, les fonds, les couleurs,
 la traduction française, la configuration des mises à jour automatiques.

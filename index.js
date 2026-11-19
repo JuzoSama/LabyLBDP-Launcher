@@ -13,6 +13,10 @@ const { pathToFileURL }                 = require('url')
 const { AZURE_CLIENT_ID, MSFT_OPCODE, MSFT_REPLY_TYPE, MSFT_ERROR, SHELL_OPCODE } = require('./app/assets/js/ipcconstants')
 const LangLoader                        = require('./app/assets/js/langloader')
 
+// Le launcher s'appelait « Laby LBDP » : on garde son dossier de données
+// (comptes connectés, réglages) pour que personne ne doive se reconnecter.
+app.setPath('userData', path.join(app.getPath('appData'), 'Laby LBDP'))
+
 // Setup Lang
 LangLoader.setupLanguage()
 

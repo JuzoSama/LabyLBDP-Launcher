@@ -1,8 +1,9 @@
 name: Lien de téléchargement direct
 
 # Ajoute à la dernière version stable une copie de l'installateur Windows
-# au nom fixe « Laby-LBDP-Setup.exe », pour que ce lien marche toujours :
-# https://github.com/JuzoSama/LabyLBDP-Launcher/releases/latest/download/Laby-LBDP-Setup.exe
+# sous un nom fixe, pour que ce lien marche toujours :
+# https://github.com/JuzoSama/LabyLBDP-Launcher/releases/latest/download/Projet-PARADOX-Setup.exe
+# L'ancien nom « Laby-LBDP-Setup.exe » est aussi publié, pour les liens déjà partagés.
 on:
   workflow_dispatch:
   workflow_call:
@@ -21,7 +22,8 @@ jobs:
           TAG=$(gh release view --json tagName -q .tagName)
           V="${TAG#v}"
           mkdir -p /tmp/lien
-          gh release download "$TAG" -p "Laby-LBDP-setup-$V.exe" -D /tmp/lien
-          mv "/tmp/lien/Laby-LBDP-setup-$V.exe" /tmp/lien/Laby-LBDP-Setup.exe
-          gh release upload "$TAG" /tmp/lien/Laby-LBDP-Setup.exe --clobber
-          echo "Lien direct : https://github.com/$GH_REPO/releases/latest/download/Laby-LBDP-Setup.exe"
+          gh release download "$TAG" -p "Projet-PARADOX-setup-$V.exe" -D /tmp/lien
+          cp "/tmp/lien/Projet-PARADOX-setup-$V.exe" /tmp/lien/Projet-PARADOX-Setup.exe
+          cp "/tmp/lien/Projet-PARADOX-setup-$V.exe" /tmp/lien/Laby-LBDP-Setup.exe
+          gh release upload "$TAG" /tmp/lien/Projet-PARADOX-Setup.exe /tmp/lien/Laby-LBDP-Setup.exe --clobber
+          echo "Lien direct : https://github.com/$GH_REPO/releases/latest/download/Projet-PARADOX-Setup.exe"
